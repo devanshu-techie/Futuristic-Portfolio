@@ -16,9 +16,6 @@ export default function Hero() {
     }
   };
 
-  const handleDownloadResume = () => {
-    alert("Preparing Devanshu's Premium CV Resume. PDF download will begin shortly!");
-  };
 
   return (
     <div className="relative py-12 md:py-20 flex flex-col items-center justify-center overflow-hidden border-b border-white/10">
@@ -91,13 +88,16 @@ export default function Hero() {
           </button>
 
           {/* Resume Download Action */}
-          <button
-            onClick={handleDownloadResume}
+          <a
+            href="https://drive.google.com/uc?export=download&id=1b_NyvgeyTTLX8dD1FzUweGhTP7i7HprH"
+            target="_blank"
+            rel="noopener noreferrer"
             className="w-full border border-white/10 bg-[#0A0A0A] hover:border-emerald-500/50 hover:bg-[#080808] transition-all text-emerald-400 text-xs uppercase tracking-widest font-bold rounded-sm py-4.5 flex items-center justify-center space-x-1.5"
+            aria-label="Download CV Resume"
           >
             <Download className="w-3.5 h-3.5" />
             <span>DOWNLOAD CV RESUME</span>
-          </button>
+          </a>
         </div>
 
         {/* Quick High-Impact Statistics */}
