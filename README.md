@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Devanshu Portfolio
 
 A futuristic developer portfolio built with React, Vite, and Express.
@@ -18,3 +19,7 @@ A futuristic developer portfolio built with React, Vite, and Express.
    `npm run build`
 2. Start the server:
    `npm start`
+=======
+# Futuristic-Portfolio
+A modern, high-performance portfolio landing page built with a futuristic design philosophy. This project combines immersive visuals, smooth animations, responsive layouts, and clean UI principles to create a memorable first impression for developers, designers, and creative professionals.
+>>>>>>> e8d553b14c461041b15ec247819809a77a4671b8
