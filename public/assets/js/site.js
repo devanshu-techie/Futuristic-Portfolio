@@ -448,7 +448,10 @@
           return;
         }
         if (data.notify && data.notify.url) {
-          fetch(data.notify.url, { method: 'POST', headers: { 'content-type': 'application/json', accept: 'application/json' }, body: JSON.stringify(data.notify.body), keepalive: true }).catch(() => {});
+          // Multipart body = "simple" CORS request (no preflight), which keepalive allows.
+          const nf = new FormData();
+          Object.entries(data.notify.body).forEach(([k, v]) => nf.append(k, String(v)));
+          fetch(data.notify.url, { method: 'POST', headers: { accept: 'application/json' }, body: nf, keepalive: true }).catch(() => {});
         }
         track('contact_form_submit', { service: value(form, 'serviceCategory'), page: location.pathname });
         store.del(draftKey);

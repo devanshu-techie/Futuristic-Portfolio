@@ -567,7 +567,13 @@ async function renderSettings() {
     ev.currentTarget.setAttribute('aria-busy', 'true');
     try {
       const r = await api('test-email', { method: 'POST', body: {} });
-      if (r.notify) await fetch(r.notify.url, { method: 'POST', headers: { 'content-type': 'application/json', accept: 'application/json' }, body: JSON.stringify(r.notify.body) });
+      if (r.notify) {
+        const nf = new FormData();
+        Object.entries(r.notify.body).forEach(([k, v]) => nf.append(k, String(v)));
+        const fr = await fetch(r.notify.url, { method: 'POST', headers: { accept: 'application/json' }, body: nf });
+        const fd = await fr.json().catch(() => ({}));
+        if (!fr.ok || String(fd.success) === 'false') throw new Error(fd.message || 'FormSubmit did not accept the email.');
+      }
       toast(r.message);
     } catch (err) { toast(err.message, true); } finally { ev.currentTarget?.removeAttribute('aria-busy'); }
   });
