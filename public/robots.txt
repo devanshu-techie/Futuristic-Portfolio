@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /track
+
+Sitemap: https://devanshgulati.in/sitemap.xml
