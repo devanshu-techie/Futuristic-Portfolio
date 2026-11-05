@@ -52,7 +52,8 @@ cp .env.example .env.local     # fill ADMIN_PASSWORD and the three secrets
 npm run dev                    # http://localhost:3000
 npm test                       # unit + integration tests
 npm run check                  # renders every page (also the Vercel build step)
-npm run test:e2e               # end-to-end (needs: npm i -g playwright && npx playwright install chromium)
+npm run test:e2e               # browser end-to-end (needs: npm i -g playwright && npx playwright install chromium)
+BASE_URL=https://devanshugulati.in ADMIN_EMAIL=… ADMIN_PASSWORD=… node tests/e2e/live-api.mjs   # live checks
 ```
 
 Locally, data is stored in `.data/` (git-ignored). Uploaded images are served from `/uploads/`.
@@ -74,7 +75,7 @@ Locally, data is stored in `.data/` (git-ignored). Uploaded images are served fr
 | --- | --- | --- |
 | **Resend** (recommended) | Create an account, verify `devanshugulati.in`, set `RESEND_API_KEY` and `EMAIL_FROM` | Branded admin + customer emails |
 | **Gmail SMTP** | Google Account → Security → 2-Step Verification → App passwords. Set `SMTP_USER` (your Gmail) and `SMTP_PASS` (the 16-character app password) | Admin + customer emails from your Gmail |
-| **FormSubmit** (default fallback) | Nothing — the first enquiry triggers an activation email to the notification address; click **Activate** once | Admin notification + customer auto-response |
+| **FormSubmit** (default fallback) | Nothing — the first enquiry triggers an activation email to the notification address; click **Activate** once. Sent from the visitor's browser after the enquiry is saved (FormSubmit blocks server requests) | Admin notification + customer auto-response |
 
 Use **Admin → Settings → Send a test email** to confirm.
 
@@ -82,7 +83,8 @@ Use **Admin → Settings → Send a test email** to confirm.
 
 - Sign in at `/admin/login` with `ADMIN_EMAIL` and `ADMIN_PASSWORD`.
 - Change the password in **Settings** — it is stored as a scrypt hash and replaces the environment password; all other sessions are signed out.
-- **Forgot password** emails a 30-minute reset link to the admin email.
+- **Forgot password** emails a 30-minute reset link to the admin email (needs Resend or Gmail SMTP).
+- **Locked out?** Change `ADMIN_PASSWORD` in Vercel → Settings → Environment Variables and redeploy. A new value there always replaces a password saved in the admin panel.
 - Every content save keeps a backup; **Settings → Backups & version history** restores any of the last 25 versions.
 
 ## Security

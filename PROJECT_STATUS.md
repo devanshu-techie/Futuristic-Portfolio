@@ -17,12 +17,18 @@ _Last updated: 6 November 2026_
 - [x] SEO: titles, descriptions, canonical, Open Graph, sitemap.xml, robots.txt, JSON-LD (ProfessionalService, WebSite, Service, BreadcrumbList, FAQPage, CreativeWork)
 - [x] Security headers (CSP, HSTS, frame-ancestors, etc.), same-origin checks, HttpOnly SameSite=Strict cookies
 - [x] GA4 with consent banner (loads only after consent, when an ID is set)
-- [x] Tests: 18 unit/integration tests (`npm test`), 18 end-to-end tests (`npm run test:e2e`), build check (`npm run check`)
+- [x] Tests: 20 unit/integration tests (`npm test`), 18 end-to-end tests (`npm run test:e2e`), build check (`npm run check`)
+
+## Live
+- [x] Deployed to https://devanshugulati.in (Vercel project devanshu-portfolio, auto-deploys from `main`)
+- [x] Vercel Blob store `devanshugulati-data` (Mumbai) connected; secrets set
+- [x] Live test suite 14/14 passing on production; no runtime errors
+- [x] Old portfolio preserved on the `legacy-portfolio` branch
 
 ## Needs the owner
-- [ ] Approve Vercel team access and install the Claude GitHub app (for automated deploys)
-- [ ] Connect a Vercel Blob store to the project (saves enquiries + content)
-- [ ] Choose an email provider (Resend or Gmail app password) — or click FormSubmit's activation email
+- [ ] Send one test enquiry and click FormSubmit's **Activate** email (until then notifications are queued by FormSubmit)
+- [ ] Change the initial admin password in Admin → Settings
+- [ ] Optional: Gmail app password or Resend for branded emails and password-reset emails
 - [ ] Replace project images with high-resolution versions and add real case-study details
 - [ ] Add real testimonials when clients provide them
 - [ ] Add Instagram / YouTube / Facebook / X links in Admin → Settings
