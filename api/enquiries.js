@@ -119,7 +119,7 @@ export async function POST(request) {
     if (mail.errors?.length) console.error('[enquiry] email issues', record.ref, mail.errors);
 
     if (html) return redirect(`/track?ref=${record.ref}&new=1`);
-    return json({ ok: true, ref: record.ref, emailed: Boolean(mail.customer) }, 201);
+    return json({ ok: true, ref: record.ref, emailed: Boolean(mail.customer || mail.clientNotify), notify: mail.clientNotify || null }, 201);
   } catch (err) {
     return serverError(err, 'enquiries');
   }

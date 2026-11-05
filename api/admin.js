@@ -9,7 +9,7 @@ import { getContent, saveContent, listVersions, readVersion } from '../lib/conte
 import { sanitizeContent, checkAttachment } from '../lib/validate.js';
 import { rateLimit, clientIp } from '../lib/ratelimit.js';
 import { storageMode, put, publicUrl } from '../lib/storage.js';
-import { emailProvider, sendPlainEmail } from '../lib/email.js';
+import { emailProvider, sendPlainEmail, canSendFromServer, formsubmitNotify } from '../lib/email.js';
 import { ENQUIRY_STATUSES, SERVICE_CATEGORIES, PROJECT_CATEGORIES } from '../lib/defaults.js';
 
 const IMAGE_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
@@ -66,6 +66,9 @@ async function publicHandlers(route, request) {
     const limit = rateLimit(`forgot:${ip}`, { limit: 3, windowMs: 60 * 60_000 });
     const message = 'If that account exists, a reset link has been sent to the admin email.';
     if (!limit.ok) return json({ ok: true, message });
+    if (!canSendFromServer()) {
+      return json({ ok: true, message: 'Password reset emails need Resend or Gmail set up. To reset now, change ADMIN_PASSWORD in Vercel → Settings → Environment Variables and redeploy; the new value replaces the old password.' });
+    }
     try {
       const content = await getContent();
       const token = await createResetToken();
@@ -210,6 +213,9 @@ async function handle(request) {
   if (route === 'test-email' && method === 'POST') {
     const content = await getContent();
     const to = content.settings.notifyEmail || content.settings.email;
+    if (!canSendFromServer()) {
+      return json({ ok: true, message: `Test email sent to ${to} via FormSubmit. The first time, FormSubmit sends an "Activate" email instead — click it once.`, notify: formsubmitNotify(to, { _subject: `Test email — ${content.settings.brand}`, _captcha: 'false', _template: 'box', message: `This is a test from your website admin panel.\nSent: ${new Date().toISOString()}` }) });
+    }
     try {
       await sendPlainEmail(to, `Test email — ${content.settings.brand}`, `This is a test from your website admin panel.\n\nEmail provider: ${emailProvider()}\nSent: ${new Date().toISOString()}`, content.settings);
       return json({ ok: true, message: `Test email sent to ${to}. Check the inbox (and spam folder).` });

@@ -565,7 +565,11 @@ async function renderSettings() {
   bindInputs(view); bindSave();
   $('[data-test-email]').addEventListener('click', async (ev) => {
     ev.currentTarget.setAttribute('aria-busy', 'true');
-    try { toast((await api('test-email', { method: 'POST', body: {} })).message); } catch (err) { toast(err.message, true); } finally { ev.currentTarget?.removeAttribute('aria-busy'); }
+    try {
+      const r = await api('test-email', { method: 'POST', body: {} });
+      if (r.notify) await fetch(r.notify.url, { method: 'POST', headers: { 'content-type': 'application/json', accept: 'application/json' }, body: JSON.stringify(r.notify.body) });
+      toast(r.message);
+    } catch (err) { toast(err.message, true); } finally { ev.currentTarget?.removeAttribute('aria-busy'); }
   });
   $('[data-pw]').addEventListener('submit', async (ev) => {
     ev.preventDefault();

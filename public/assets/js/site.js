@@ -447,6 +447,9 @@
           alertBox.hidden = false;
           return;
         }
+        if (data.notify && data.notify.url) {
+          fetch(data.notify.url, { method: 'POST', headers: { 'content-type': 'application/json', accept: 'application/json' }, body: JSON.stringify(data.notify.body), keepalive: true }).catch(() => {});
+        }
         track('contact_form_submit', { service: value(form, 'serviceCategory'), page: location.pathname });
         store.del(draftKey);
         if (success) {

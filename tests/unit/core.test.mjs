@@ -184,6 +184,26 @@ test('admin credentials, sessions and password change', async () => {
   assert.equal(auth.passwordProblem('longenough123'), null);
 });
 
+test('changing ADMIN_PASSWORD in the host overrides a stored password (owner recovery)', async () => {
+  await auth.changePassword('Stored-Pass-555');
+  assert.equal((await auth.checkCredentials('owner@example.com', 'Stored-Pass-555')).ok, true);
+  const before = process.env.ADMIN_PASSWORD;
+  process.env.ADMIN_PASSWORD = 'Recovered-Pass-777';
+  assert.equal((await auth.checkCredentials('owner@example.com', 'Recovered-Pass-777')).ok, true, 'new env password works');
+  assert.equal((await auth.checkCredentials('owner@example.com', 'Stored-Pass-555')).ok, false, 'old stored password stops working');
+  process.env.ADMIN_PASSWORD = before;
+});
+
+test('FormSubmit notifications are prepared for the browser, not sent from the server', async () => {
+  delete process.env.EMAIL_FALLBACK;
+  const r = await email.sendEnquiryEmails({ ...good, ref: 'DG-261106-ABCDE', extra: {} }, DEFAULT_CONTENT.settings, 'https://devanshugulati.in');
+  assert.equal(r.provider, 'formsubmit');
+  assert.ok(r.clientNotify.url.startsWith('https://formsubmit.co/ajax/'));
+  assert.equal(r.clientNotify.body.Reference, 'DG-261106-ABCDE');
+  assert.ok(r.clientNotify.body._autoresponse.includes('DG-261106-ABCDE'));
+  process.env.EMAIL_FALLBACK = 'off';
+});
+
 test('password reset tokens work once and expire', async () => {
   const token = await auth.createResetToken();
   assert.ok(await auth.consumeResetToken(token));
