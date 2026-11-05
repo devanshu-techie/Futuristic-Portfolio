@@ -4,4 +4,4 @@ Disallow: /admin
 Disallow: /api/
 Disallow: /track
 
-Sitemap: https://devanshgulati.in/sitemap.xml
+Sitemap: https://devanshugulati.in/sitemap.xml

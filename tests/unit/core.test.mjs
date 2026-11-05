@@ -202,8 +202,8 @@ test('rate limiter blocks after the limit', () => {
 
 test('email templates escape user input', () => {
   const evil = { ...good, ref: 'DG-261106-ABCDE', fullName: '<img src=x onerror=alert(1)>', message: '<script>x</script>', extra: { '<b>': '<i>' } };
-  const a = email.adminEmailContent(evil, DEFAULT_CONTENT.settings, 'https://devanshgulati.in');
-  const cst = email.customerEmailContent(evil, DEFAULT_CONTENT.settings, 'https://devanshgulati.in');
+  const a = email.adminEmailContent(evil, DEFAULT_CONTENT.settings, 'https://devanshugulati.in');
+  const cst = email.customerEmailContent(evil, DEFAULT_CONTENT.settings, 'https://devanshugulati.in');
   for (const h of [a.html, cst.html]) {
     assert.ok(!h.includes('<script>'), 'script tag escaped');
     assert.ok(!h.includes('<img src=x'), 'img tag escaped');

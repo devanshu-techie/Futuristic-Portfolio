@@ -1,4 +1,4 @@
-# Project status — devanshgulati.in
+# Project status — devanshugulati.in
 
 _Last updated: 6 November 2026_
 

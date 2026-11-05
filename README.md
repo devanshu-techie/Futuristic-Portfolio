@@ -1,4 +1,4 @@
-# devanshgulati.in — digital agency platform
+# devanshugulati.in — digital agency platform
 
 Website, enquiry system and admin CMS for **Devansh Gulati — Everything Digital. One Trusted Partner.**
 
@@ -63,8 +63,8 @@ Locally, data is stored in `.data/` (git-ignored). Uploaded images are served fr
 2. **Storage**: Vercel → Project → Storage → Create → **Blob** → connect to the project. This adds `BLOB_READ_WRITE_TOKEN` automatically.
 3. **Environment variables** (Settings → Environment Variables, Production + Preview):
    `SITE_URL`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `SESSION_SECRET`, `DATA_ENCRYPTION_KEY`, `FORM_SECRET`, plus one email option (see below).
-4. **Domain**: Settings → Domains → add `devanshgulati.in` and `www.devanshgulati.in` (redirect www → apex). If the domain is on another project, remove it there first.
-5. Redeploy, then open `https://devanshgulati.in/api/health` — it should report `"storage":"blob"` and your email provider.
+4. **Domain**: Settings → Domains → add `devanshugulati.in` and `www.devanshugulati.in` (redirect www → apex). If the domain is on another project, remove it there first.
+5. Redeploy, then open `https://devanshugulati.in/api/health` — it should report `"storage":"blob"` and your email provider.
 
 > Keep `DATA_ENCRYPTION_KEY` safe. If it changes, existing enquiries can no longer be decrypted.
 
@@ -72,7 +72,7 @@ Locally, data is stored in `.data/` (git-ignored). Uploaded images are served fr
 
 | Option | Setup | Sends |
 | --- | --- | --- |
-| **Resend** (recommended) | Create an account, verify `devanshgulati.in`, set `RESEND_API_KEY` and `EMAIL_FROM` | Branded admin + customer emails |
+| **Resend** (recommended) | Create an account, verify `devanshugulati.in`, set `RESEND_API_KEY` and `EMAIL_FROM` | Branded admin + customer emails |
 | **Gmail SMTP** | Google Account → Security → 2-Step Verification → App passwords. Set `SMTP_USER` (your Gmail) and `SMTP_PASS` (the 16-character app password) | Admin + customer emails from your Gmail |
 | **FormSubmit** (default fallback) | Nothing — the first enquiry triggers an activation email to the notification address; click **Activate** once | Admin notification + customer auto-response |
 

@@ -23,16 +23,16 @@ try {
     ...DEFAULT_CONTENT.projects.map((p) => `/work/${p.slug}`), '/about', '/contact', '/contact?service=Website%20Development&need=website',
     '/faq', '/track', '/privacy-policy', '/terms-and-conditions', '/refund-policy', '/sitemap.xml', '/admin/login'];
   for (const p of paths) {
-    const url = new URL(p, 'https://devanshgulati.in');
+    const url = new URL(p, 'https://devanshugulati.in');
     const res = await renderPath(new Request(url), url.pathname);
     const body = await res.text();
     if (res.status !== 200) fail(`${p} returned ${res.status}`);
     else if (p !== '/sitemap.xml' && (!body.includes('<title>') || body.includes('undefined') || body.includes('[object Object]'))) fail(`${p} rendered suspicious output`);
     else pass(`renders ${p} (${(body.length / 1024).toFixed(1)} KB)`);
   }
-  const nf = await renderPath(new Request('https://devanshgulati.in/nope'), '/nope');
+  const nf = await renderPath(new Request('https://devanshugulati.in/nope'), '/nope');
   if (nf.status !== 404) fail('unknown path should 404'); else pass('404 page');
-  const adm = await renderPath(new Request('https://devanshgulati.in/admin/dashboard'), '/admin/dashboard');
+  const adm = await renderPath(new Request('https://devanshugulati.in/admin/dashboard'), '/admin/dashboard');
   if (adm.status !== 303) fail('admin must redirect when signed out'); else pass('admin is protected');
   for (const f of ['public/assets/css/site.css', 'public/assets/css/admin.css', 'public/assets/js/site.js', 'public/assets/js/admin.js', 'public/assets/js/admin-login.js', 'public/assets/js/theme.js']) {
     if (!existsSync(f)) fail(`missing ${f}`);
